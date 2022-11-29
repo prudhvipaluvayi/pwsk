@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}
+Student Details
+{% endblock title %}
+{% block body %}
+ <h3 class="text-center" style="margin-top:115px;"><span>Student Details</span> </h3>
+  
+{% with messages=get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+    {{message}}
+</div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+<br>
+ 
+
+<div class="container ">
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <td>Field</td>
+                <td>Value</td>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for post in query %}
+            <tr>
+                <td>id</td>
+                <td>{{post.id}}</td>
+            </tr>
+            <tr>
+                <td>username</td>
+                <td>{{post.username}}</td>
+            </tr>
+            <tr>
+                <td>rollno</td>
+                <td>{{post.rollno}}</td>
+            </tr>
+            <tr>
+                <td>email</td>
+                <td>{{post.email}}</td>
+            </tr>
+            <tr>
+                <td>standard</td>
+                <td>{{post.standard}}</td>
+            </tr>
+            <tr>
+                <td>gender</td>
+                <td>{{post.gender}}</td>
+            </tr>
+            <tr>
+                <td>mobile</td>
+                <td>{{post.mobile}}</td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    <center>
+                    <a href="/edit/{{post.id}}"><button class="btn btn-primary">Edit </button> </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="/delete/{{post.id}}"><button onclick="return confirm('Are you sure to Delete data');" class="btn btn-danger">Delete </button></a>
+                    </center>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+{% endblock body %}

@@ -1,0 +1,82 @@
+{% extends 'auth.html' %}
+{% block title %}
+Signup
+
+{% endblock title %}
+{% block content %}
+<div class="row">
+  <div class="col-7">
+    <center>
+      <div style="margin-top: 25%;width: 100%;">
+        <div id="logo">
+          <img src="../static/images/logo.png" style="width: 120px;margin-top: 1px;border-radius: 8px 25px;"/>
+        </div>
+        <br>
+        <div>
+          <h1>
+            Private Website for School Kids
+          </h1>
+        </div>
+      </div>
+    </center>
+  </div>
+  <div class="col-5" >
+    <div style="width: 70%;margin-top: 8%;">
+<h1 class="mb-1 text-white"><span>Register</span> </h1>
+
+{% with messages=get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+  {{message}}
+
+
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<form class="py-3 px-3" action="/signup" method="post">
+<div class="form-group" style="text-align: left;">
+  <label for="exampleInputPassword1"><b>User Name</b><span class="text-danger">*</span></label>
+  <input type="text" class="form-control mb-2" name="username" id="username" required>
+</div>
+<div class="form-group" style="text-align: left;">
+  <label for="exampleInputEmail1"><b>Email address</b><span class="text-danger">*</span></label>
+  <input type="email" class="form-control mb-2" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" required> 
+</div>
+<div class="form-group" style="text-align: left;">
+  <label for="exampleInputPassword1"><b>Password</b><span class="text-danger">*</span></label>
+  <input type="password" class="form-control mb-2" name="password" id="exampleInputPassword1" required>
+</div>
+
+<div class="form-group" style="text-align: left;">
+  <label for="sem"><b>Standard</b></label>
+  <input type="number" class="form-control mb-2" name="sem" id="sem" required>
+</div>
+<div class="form-group" style="text-align: left;">
+  <label for="gender"><b>Gender</b></label>
+  <select class="form-control" name="gender" id="gender">
+    <option value="">Select Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
+</div>
+<div class="form-group" style="text-align: left;">
+  <label for="mobile"><b>Mobile</b></label>
+  <input type="number" class="form-control mb-2" name="mobile" id="mobile" required>
+</div>
+<div class="form-group" style="text-align: left;">
+  <label for="rollno"><b>Student Id</b></label>
+  <input type="text" class="form-control mb-2" name="rollno" id="rollno" required>
+</div>
+<br>
+<button type="submit" type="submit" class="btn btn-secondary m-1" style="z-index:5;position: absolute;width: 80px;bottom: 20px;left: 47%;">Submit</button>
+  <p class="mb-2 pb-0 pt-2">Already User? &nbsp;<a href="/login" class="about-btn scrollto">Login</a></p>
+  
+    
+</form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

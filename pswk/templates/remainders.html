@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %}
+Add Remainder
+{% endblock title %}
+
+{% block body %}
+<h3 class="text-center" style="margin-top:115px;"><span>Add Remainders Details</span> </h3>
+          
+{% with messages=get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+  {{message}}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Remainders</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <div style="width: 90%;padding: 15px;border-radius: 20px;">
+         
+        <div class="container">
+        
+        <div class="row">
+        
+        <div class="col-md-12">
+        <center>
+        <form action="/addremainders" method="post">
+          <div class="form-group">      
+            <div style="width: 50%;float: left;padding: 5px;text-align: left;">
+              <label for="remainder"><b>Remainder Text</b></label>
+              <textarea class="form-control" name="remainder_text" id="address"></textarea>
+            </div>
+            <div style="width: 50%;float: left;padding: 5px;text-align: left;">
+              <label><b>Enter Date</b></label>
+              <input type="date" class="form-control" name="date" id="date">
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <div style="width: 100%;float: left;padding: 5px;">
+              <button type="submit" class="btn btn-danger btn-sm btn-block">Add Remainder</button>
+            </div>  
+          </div>
+        </form>
+        </center>
+        <br>
+        <br>
+        
+        </div>
+        
+        
+        </div></div>
+        </div>        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container mt-4">
+  
+  <button type="button" class="m-2 btn btn-sm btn-outline-primary" style="float: right"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add Remainder
+  </button>
+    <table class="table table-dark">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Remainder Id</th>
+          <th scope="col">Roll Number</th>
+          <th scope="col">Remainder Text</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for post in list %}
+        <tr>
+          <th scope="row">{{post.remainder_id}}</th>
+          <td>{{post.rollno}}</td>
+          <td><textarea>{{post.remainder_text}}</textarea></td>
+          <td>{{post.date}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+{% endblock body %}

@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block title %}
+Add Activities
+{% endblock title %}
+
+{% block body %}
+<div style="margin-top:115px;"></div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Activities</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            
+                <div>
+                    <center>
+                    <h3 class="text-center"><span>Add Activity</span></h3>
+                    
+                    {% with messages=get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+
+                    <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                        {{message}}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form action="/activities" method="post">
+                                    <div class="form-group" style="width: 100%;">
+                                        <div style="width: 50%;float: left;padding: 5px;text-align: left;">
+                                            <label for="to_do_list"><b>Select Activity Type</b></label>
+                                            <input type="text" class="form-control" name="activity_type" />
+                                        </div>
+                                        <div style="width: 50%;float: left;padding: 5px;text-align: left;">
+                                            <label for="to_do_list"><b>Activity Name</b></label>
+                                            <input type="text" class="form-control" name="activity_name" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="width: 100%;">
+                                        <div style="width: 50%;float: left;padding: 5px;text-align: left;">
+                                            <label for=""><b>Activity Date</b></label>
+                                            <input type="date" class="form-control" name="activity_date" id="date">
+                                        </div>
+                                        <div style="width: 50%;float: left;padding: 5px;text-align: left;">
+                                            <label for="to_do_list"><b>Class</b></label>
+                                            <select name="activity_class" class="form-select">
+                                                <option value="">Select Class</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group pt-2" style="width: 100%;float: left;">
+                                        <button type="submit" class="btn btn-danger btn-sm btn-block">Add Activities</button>
+                                    </div>                            
+                                </form>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    {% if current_user.admin==1 %}
+    <button type="button" class="m-2 btn btn-sm btn-outline-primary" style="float: right"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add Activity
+    </button>
+    <table class="table table-dark">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Activity Id</th>
+                <th scope="col">Activity Date</th>
+                <th scope="col">Activity Class</th>
+                <th scope="col">Activity Type</th>
+                <th scope="col">Activity Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in query %}
+            <tr>
+                <th scope="row">{{post.activity_id}}</th>
+                <td>{{post.activity_date}}</td>
+                <td>{{post.activity_class}}</td>
+                <td>{{post.activity_type}}</td>
+                <td>{{post.activity_name}}</td>
+                <td><a href="/save_activities/{{post.activity_id}}" class="btn btn-primary">Edit</a>
+                    <a href="/delete_activity/{{post.activity_id}}" class="btn btn-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% if current_user.admin==0 %}
+    <table class="table table-dark">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Activity Id</th>
+                <th scope="col">Activity Date</th>
+                <th scope="col">Activity Class</th>
+                <th scope="col">Activity Type</th>
+                <th scope="col">Activity Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in query %}
+            <tr>
+                <th scope="row">{{post.activity_id}}</th>
+                <td>{{post.activity_date}}</td>
+                <td>{{post.activity_class}}</td>
+                <td>{{post.activity_type}}</td>
+                <td>{{post.activity_name}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}    
+</div>
+
+{% endblock body %}

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block title %}
+Student
+{% endblock title %}
+{% block home %}
+menu-active
+{% endblock home %}
+
+{% block body %}
+
+{% if homeFlag %}
+
+
+<style>
+    body{
+        overflow-x: hidden;
+    }
+	.album_image { position: relative; width:200px; height: 150px; float:left; margin: 5px; border-radius: 5px; box-shadow: 2px 2px 5px #333; }
+	.album_image img{ width:100%; height: 100%; margin-top: auto;margin-bottom: auto; border-radius: 5px; 
+    object-fit: cover;}
+	.album_image a{ position: absolute; right:5px;top: 5px; display:none ;border-radius: 5px;}
+	.album_image:hover{ box-shadow: 2px 2px 5px #f24848; }
+	.album_image:hover a{ display:block;font-weight: bolder;}  
+	.image_description{position: absolute; bottom:0px;left: 5px;color: black;font-weight: bold; }
+</style>
+<div style="padding-top: 125px;" ></div>
+
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Image</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-2">
+
+    </div>
+    <div class="col-8">
+        <div class="card" style="margin-bottom: 20px;">
+            <div class="card-body">
+                <h4>
+                    Upcoming Events: 
+                    
+                </h4>
+                <ol>
+                    {% for event in events %}
+                        <li>{{ event.task }} ({{ event.date }})</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-2">
+    </div>
+    <div class="col-2">
+
+    </div>
+    <div class="col-8">
+        <div class="card" style="margin-bottom: 20px;">
+            <div class="card-body">
+                
+                <h4>Media</h4>
+                <div class="card" style="width: 15rem;float: left; margin:20px;border:0px;background-color: transparent;">
+                    <div style="width:90px;background-color:#ffc97e;border-top-right-radius:5px;border-top-left-radius:5px;">
+                        &nbsp;
+                    </div>
+                    <div class="card-body" style="float:right;background-color: #ffc97e;width: 250px;
+            height: 130px;border-top-right-radius: 50px;border-bottom-right-radius: 5px;position: relative;
+            box-shadow: 2px -1px 10px 0px black;">
+                        <h5 class="card-title">Student Documents</h5>
+                        <a href="/student_documents" class="btn" style="width: 100%;height: 100%;top: 0px;left: 0px;position: absolute;"></a>
+                    </div>
+                </div>
+                <div class="card" style="width: 15rem;float: left; margin:20px;border:0px;background-color: transparent;">
+                    <div style="width:90px;background-color:#ffc97e;border-top-right-radius:5px;border-top-left-radius:5px;">
+                        &nbsp;
+                    </div>
+                    <div class="card-body" style="float:right;background-color: #ffc97e;width: 250px;
+            height: 130px;border-top-right-radius: 50px;border-bottom-right-radius: 5px;position: relative;
+            box-shadow: 2px -1px 10px 0px black;">
+                        <h5 class="card-title">Images</h5>
+                        <a href="/images" class="btn" style="width: 100%;height: 100%;top: 0px;left: 0px;position: absolute;"></a>
+                    </div>
+                </div>
+                <div class="card" style="width: 15rem;float: left; margin:20px;border:0px;background-color: transparent;">
+                    <div style="width:90px;background-color:#ffc97e;border-top-right-radius:5px;border-top-left-radius:5px;">
+                        &nbsp;
+                    </div>
+                    <div class="card-body" style="float:right;background-color: #ffc97e;width: 250px;
+            height: 130px;border-top-right-radius: 50px;border-bottom-right-radius: 5px;position: relative;
+            box-shadow: 2px -1px 10px 0px black;">
+                        <h5 class="card-title">Acheivements</h5>
+                        <a href="/acheivements_media" class="btn" style="width: 100%;height: 100%;top: 0px;left: 0px;position: absolute;"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-2">
+    </div>
+    
+    <div class="col-2">
+
+    </div>
+    
+</div>
+{% endif %}
+
+<script>
+    function open_image(userid){
+        $.ajax({
+            url:'/ajaxfile',
+            type:'post',
+            data:{userid:userid},
+            success:function(data){
+                $('.modal-body').html(data);
+                $('.modal-body').append(data.htmlresponse);
+                $("#imageModal").modal("show");
+            }
+        })        
+    }
+</script>
+{% endblock body %}

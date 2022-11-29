@@ -1,0 +1,27 @@
+{% extends 'auth.html' %}
+{% block title %}
+Home
+{% endblock title %}
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <center>
+      <div style="margin-top: 15%;width: 100%;">
+        <div id="logo">
+          <img src="../static/images/logo.png" style="width: 120px;margin-top: 1px;border-radius: 8px 25px;"/>
+        </div>
+        <br>
+        <div>
+          <h1>
+            Private Website for School Kids
+          </h1>
+          Are you a new User? <a href="/signup">Register</a>
+          <br>
+          Are you a existing User? <a href="/login">Login</a>
+        </div>
+      </div>
+    </center>
+  </div>
+</div>
+  
+{% endblock content %}

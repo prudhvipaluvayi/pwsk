@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block title %}
+Student Documents
+{% endblock title %}
+
+{% block body %}
+<style>
+	.album_image { position: relative; width:200px; height: 150px; float:left; margin: 5px; border-radius: 5px; box-shadow: 2px 2px 5px #333; }
+	.album_image img{ width:100%; height: 100%; margin-top: auto;margin-bottom: auto; border-radius: 5px; 
+    object-fit: cover;}
+	.album_image a{ position: absolute; right:5px;top: 5px; display:none ;border-radius: 5px;}
+	.album_image:hover{ box-shadow: 2px 2px 5px #f24848; }
+	.album_image:hover a{ display:block;font-weight: bolder;}  
+	.image_description{position: absolute; bottom:0px;left: 5px;color: black;font-weight: bold; }
+</style>
+<div style="margin-top:115px;"></div>
+
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Image</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Media</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            
+                <div>
+                    <center>
+                        <h3 class="text-center"><span>Add Media</span></h3>
+                        
+                        {% with messages=get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+
+                        <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                            {{message}}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form action="/media" method="post" enctype = "multipart/form-data">
+                                        <div class="form-group" style="width: 100%;">
+                                            <div style="width: 100%;float: left;padding: 5px;text-align: left;">
+                                                <label><b>Media Type</b></label>
+                                                <select class="form-control" name="media_type" id="media_type">
+                                                    <option value="pdf">PDF</option>
+                                                    <option value="document">Document</option>
+                                                    <option value="image">Image</option>
+                                                </select>
+                                            </div>
+                                            <div style="width: 100%;float: left;padding: 5px;text-align: left;">
+                                                <label><b>Storage Space</b></label>
+                                                <select class="form-control" name="space" id="media_type" >
+                                                    <option value="student_documents" selected>Student Documents</option>
+                                                </select>
+                                            </div>
+                                            <div style="width: 100%;float: left;padding: 5px;text-align: left;">
+                                                <label><b>Select File</b></label>
+                                                <input type="file" class="form-control" name="file" id="file"/>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group pt-2" style="width: 100%;float: left;">
+                                            <button type="submit" class="btn btn-danger btn-sm btn-block">Add Media</button>
+                                        </div>                            
+                                    </form>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <button type="button" class="m-2 btn btn-sm btn-outline-primary" style="float: right"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add Media
+    </button>
+        <div class="container" style="padding-top: 70px;">
+            <h2>Student Documents</h2>
+            {% for post in query %}
+            <div class='album_image'>
+                <a href="/delete_image/{{post.media_id}}" >X</a>
+                
+                {% if post.media_type=="image" %}
+                    <img src="{{ url_for('static', filename=''+post.media_url)}}" onclick="open_image('{{post.media_id}}')"/>
+                {% endif %}
+                {% if post.media_type=="pdf" %}
+                    <img src="{{ url_for('static', filename='/images/pdf.png')}}" onclick="open_image('{{post.media_id}}')"/>
+                    <span class="image_description">{{post.file_name}}</span>
+                {% endif %}
+                {% if post.media_type=="document" %}
+                    <img src="{{ url_for('static', filename='/images/document.png')}}" onclick="open_image('{{post.media_id}}')"/>
+                    <span class="image_description">{{post.file_name}}</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+</div>
+
+<script>
+    function open_image(userid){
+        $.ajax({
+            url:'/ajaxfile',
+            type:'post',
+            data:{userid:userid},
+            success:function(data){
+                $('.modal-body').html(data);
+                $('.modal-body').append(data.htmlresponse);
+                $("#imageModal").modal("show");
+            }
+        })        
+    }
+</script>
+{% endblock body %}

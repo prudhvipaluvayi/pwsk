@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/assets/css/style.css" rel="stylesheet">
+    <title>Edit</title>
+  </head>
+<body>
+  
+{% with messages=get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+    {{message}}
+</div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+<br>
+<div class="container">
+
+<div class="row">
+
+<div class="col"></div>
+
+<div style="border: 2px solid black;padding: 15px;border-radius: 20px;width: 60%;">
+<div class="col-md-12">
+  <h3 class="text-center"><span>Edit Student Details</span> </h3>
+
+  {% for posts in query %}
+  <form action="/edit/{{posts.id}}" method="post">
+  <div class="form-group">
+
+  <label for="rollno">rollno</label>
+  <input type="text" class="form-control" name="rollno" id="rollno" value={{posts.rollno}} >
+  </div>
+  <div class="form-group">
+
+  <label for="sname">username</label>
+  <input type="text" class="form-control" name="sname" id="sname" value={{posts.username}} >
+  </div>
+  <div class="form-group">
+
+  <label for="standard">standard</label>
+  <input type="number" class="form-control" name="standard" id="standard" value={{posts.standard}} >
+  </div>
+
+  
+  <div class="form-group m-2">
+
+    <label for="is_admin">Admin</label>
+    <select name="is_admin" class="form-select">
+      <option value="1">Yes</option>
+      <option value="0" selected>No</option>
+    </select>    </div>
+  <div class="form-group">                          
+    
+
+  <label for="gender">gender</label>
+  <select  class="form-control" id="gender" name="gender"   required>
+          <option selected>{{posts.gender}}</option>
+      
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        
+        </select>
+  </div>
+<input value="{{posts.id}}" type="hidden" name="user_id"/>
+  <div class="form-group">
+
+  <label for="email">email</label>
+  <input type="email" class="form-control" name="email" id="email" value={{posts.email}} >
+  </div>
+  <div class="form-group">
+  <label for="num">mobile</label>
+  <input type="number" class="form-control" name="mobile" id="mobile" value={{posts.mobile}} >
+  </div>
+  <center><br>
+
+    <button type="submit" class="btn btn-outline-primary btn-sm btn-block">Submit Record</button>
+  </form>
+    {% endfor %}
+  <br>
+
+  </div>
+</div>
+  <div class="col"></div>
+
+  </div>
+</div>
+</center>
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  </body>
+</html>

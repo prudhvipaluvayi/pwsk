@@ -1,0 +1,14 @@
+{% for row in rec %}
+    <div class="row">
+        {% if row.media_type=="image" %}
+            <img src="{{ url_for('static', filename=''+row.media_url)}}" class="col-12" />
+        {% endif %}
+        {% if row.media_type=="pdf" %}
+            <iframe src="{{ url_for('static', filename=''+row.media_url)}}" class="col-12" style="min-height: 500px;"></iframe>
+        {% endif %}
+        {% if row.media_type=="document" %}
+            <iframe src="{{ url_for('static', filename=''+row.media_url)}}" class="col-12" style="display:none"></iframe>
+            <h3 style="color:green">Document Downloaded</h3>
+        {% endif %}
+    </div>
+{% endfor %}
